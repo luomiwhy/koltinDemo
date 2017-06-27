@@ -24,7 +24,7 @@ fun transform(color: String): Int {
 
 fun test() {
     val result = try {
-        count()
+//        count()
     } catch (e: ArithmeticException) {
         throw IllegalStateException(e)
     }
@@ -48,7 +48,7 @@ fun arrayOfMinusOnes(size: Int): IntArray {
 fun theAnswer() = 42
 
 //对于需要泛型信息的泛型函数的适宜形式
-inline fun <reified T: Any> Gson.fromJson(json): T = this.fromJson(json, T::class.java)
+//inline fun <reified T: Any> Gson.fromJson(json): T = this.fromJson(json, T::class.java)
 
 fun main(args: Array<String>) {
     //过滤 list
@@ -91,7 +91,7 @@ fun main(args: Array<String>) {
         println("map not empty")
     }
 
-    val mapped = map?.let { transformData(it) } ?: defaultValueIfDataIsNull
+//    val mapped = map?.let { transformData(it) } ?: defaultValueIfDataIsNull
 
     class Turtle {
         fun penDown(){}
