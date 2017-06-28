@@ -196,6 +196,27 @@ inline fun <reified T: Enum<T>> printAllValues() {
     print(enumValues<T>().joinToString { it.name })
 }
 
+//对象表达式
+open class A2(x: Int) {
+    public open val y: Int = x
+}
+interface B2 {}
+
+class C2 {
+    // 私有函数，所以其返回类型是匿名对象类型
+    private fun foo() = object {
+        val x: String = "x"
+    }
+    // 公有函数，所以其返回类型是 Any
+    fun publicFoo() = object {
+        val x: String = "x"
+    }
+    fun bar() {
+        val x1 = foo().x        // 没问题
+//        val x2 = publicFoo().x  // 错误：未能解析的引用“x”
+    }
+}
+
 
 
 fun main(args: Array<String>) {
@@ -210,4 +231,7 @@ fun main(args: Array<String>) {
     println(Color.valueOf("RED").toString())
     println(Color.values().toString())
     printAllValues<Color>()
+    val ab: A2 = object : A2(1), B2 {
+        override val y = 15
+    }
 }
