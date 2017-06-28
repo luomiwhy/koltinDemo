@@ -110,3 +110,104 @@ class Unrelated(o: Outer) {
 
 class Ccc private constructor(a: Int) {}
 
+
+fun <T> MutableList<T>.swap(a: Int, b: Int) {
+    val tmp = this[a]
+    this[a] = this[b]
+    this[b] = tmp
+}
+
+class MyClass {
+    companion object {    }
+}
+fun MyClass.Companion.foo() {}
+
+
+//数据类
+data class User(val name: String, val age: Int)
+data class User2(val name: String="", val age: Int=0)
+
+//密封类
+sealed class Expr
+data class Const(val number: Double) : Expr()
+data class Sum(val e1: Expr, val e2: Expr) : Expr()
+object NotANumber: Expr()
+
+//泛型
+class Box<T>(t: T){
+    val value = t
+}
+abstract class Source<out T> {
+    abstract fun nextT(): T //返回
+}
+fun demos(strs: Source<String>) {
+    val objects : Source<Any> = strs
+}
+abstract class Comparable<in T> {
+    abstract fun compareTo(other: T): Int //作为参数传入
+}
+fun demos2(x: Comparable<Number>) {
+    x.compareTo(1.0)
+    val y: Comparable<Double> = x
+}
+fun copy(from: Array<out Any>, to: Array<Any>) {}
+fun fill(dest: Array<in String>, value: String) {}
+
+fun <T> singletonList(item: T): List<T> {
+    return listOf(item)
+}
+fun <T> T.basicToString() : String {  // 扩展函数
+    return ""
+}
+
+fun <T : Comparable<T>> sort(list: List<T>) {}
+
+//嵌套类
+class Outer2 {
+    private val bar: Int = 1
+    class Nested {
+        fun foo() = 2
+    }
+}
+class Outer3 {
+    private val bar: Int = 1
+    inner class Nested {
+        fun foo() = bar
+    }
+}
+
+//枚举类
+enum class Color(val rgb: Int) {
+    RED(0xFF0000),
+    GREEN(0x00FF00),
+    BLUE(0x0000FF)
+}
+enum class ProtocolState {
+    WAITING {
+        override fun signal() = TALKING
+    },
+    TALKING {
+        override fun signal() = WAITING
+    };
+
+    abstract fun signal(): ProtocolState
+}
+inline fun <reified T: Enum<T>> printAllValues() {
+    print(enumValues<T>().joinToString { it.name })
+}
+
+
+
+fun main(args: Array<String>) {
+    val jack = User(name = "Jack", age = 1)
+    val olderJack = jack.copy(age = 2)
+    val box: Box<Int> = Box<Int>(1)
+    val box2 = Box("sd") // 可推断出
+    val l = singletonList<Int>(1)
+    println(l)
+//    sort(listOf(1, 2, 3))错误
+//    sort(listOf(hashMapOf<Int, String>()))错误
+    println(Color.valueOf("RED").toString())
+    println(Color.values().toString())
+    printAllValues<Color>()
+}
