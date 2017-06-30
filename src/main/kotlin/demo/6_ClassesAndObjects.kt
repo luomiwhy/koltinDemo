@@ -1,5 +1,6 @@
 package demo
 
+import kotlin.reflect.KProperty
 
 
 class Person constructor(firstName: String) {}
@@ -217,6 +218,14 @@ class C2 {
     }
 }
 
+interface ReadOnlyProperty<in R, out T> {
+    operator fun getValue(thisRef: R, property: KProperty<*>): T
+}
+interface ReadWriteProperty<in R, T> {
+    operator fun getValue(thisRef: R, property: KProperty<*>): T
+    operator fun setValue(thisRef: R, property: KProperty<*>, value: T)
+}
+
 
 
 fun main(args: Array<String>) {
@@ -231,6 +240,7 @@ fun main(args: Array<String>) {
     println(Color.valueOf("RED").toString())
     println(Color.values().toString())
     printAllValues<Color>()
+    println()
     val ab: A2 = object : A2(1), B2 {
         override val y = 15
     }
