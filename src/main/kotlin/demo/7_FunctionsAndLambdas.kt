@@ -25,4 +25,8 @@ fun main(args: Array<String>) {
     val sum: (Int, Int) -> Int = { x, y -> x + y }
     val sumAdd = fun Int.(other: Int): Int = this + other
     println(1.sumAdd(3))
+
+    val nullableList: List<Int?> = listOf(1, 2, null, 4)
+    val intList: List<Int> = nullableList.filterNotNull()
+    println(intList)
 }
